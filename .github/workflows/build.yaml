@@ -16,7 +16,7 @@ jobs:
       # Additional steps to build content if necessary
 
       - name: Trigger Content Build Workflow
-        uses: actions/github-script@0.10.0
+        uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.CODINGSIMBA }}
           script: |
