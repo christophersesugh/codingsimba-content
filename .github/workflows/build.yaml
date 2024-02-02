@@ -1,0 +1,28 @@
+name: Content Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-content:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Content Repository
+        uses: actions/checkout@v2
+
+      # Additional steps to build content if necessary
+
+      - name: Trigger Content Build Workflow
+        uses: actions/github-script@0.10.0
+        with:
+          github-token: ${{ secrets.CODINGSIMBA }}
+          script: |
+            const { data } = await github.repos.createDispatchEvent({
+              owner: 'christophersesugh',
+              repo: 'codingsimba',
+              event_type: 'content-build'
+            });
+            console.log('Dispatched main-blog-build workflow. Status:', data.status);
