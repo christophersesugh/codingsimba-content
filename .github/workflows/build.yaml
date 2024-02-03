@@ -1,4 +1,4 @@
-name: Content Build
+name: Trigger Content Build
 
 on:
   push:
