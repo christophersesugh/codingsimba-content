@@ -13,16 +13,11 @@ jobs:
       - name: Checkout Content Repository
         uses: actions/checkout@v2
 
-      # Additional steps to build content if necessary
-
       - name: Trigger Content Build Workflow
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{ secrets.CODINGSIMBA }}
-          script: |
-            const { data } = await github.repos.createDispatchEvent({
-              owner: 'christophersesugh',
-              repo: 'codingsimba',
-              event_type: 'content-build'
-            });
-            console.log('Dispatched main-blog-build workflow. Status:', data.status);
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github.everest-preview+json" \
+            -H "Authorization: Bearer ${{ secrets.CODINGSIMBA }}" \
+            -H "Content-Type: application/json" \
+            https://api.github.com/repos/christophersesugh/codingsimba/dispatches \
+            -d '{"event_type": "content-build"}'
